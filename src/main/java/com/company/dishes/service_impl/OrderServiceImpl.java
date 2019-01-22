@@ -3,7 +3,6 @@ package com.company.dishes.service_impl;
 import com.company.dishes.dto.OrderDtoRequest;
 import com.company.dishes.dto.OrderDtoResponse;
 import com.company.dishes.mapper.BaseMapper;
-import com.company.dishes.mapper.OrderResponseMapper;
 import com.company.dishes.model.OrderEntity;
 import com.company.dishes.repository.BaseRepository;
 import com.company.dishes.repository.OrderRepository;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class OrderServiceImpl extends BaseServiceImpl<OrderDtoResponse, OrderEntity, Long> implements OrderService {
+public class OrderServiceImpl extends BaseServiceImpl<OrderDtoResponse, OrderEntity> implements OrderService {
 
     @Autowired
     public OrderServiceImpl(BaseRepository<OrderEntity> repository, BaseMapper<OrderDtoResponse, OrderEntity> mapper) {

@@ -8,5 +8,5 @@ public interface BaseMapper<D, E> {
 
     E dtoToEntity(D dto);
 
-    List<D> entitiesToDtos(List<E> Entities);
+    List<D> entitiesToDtos(List<E> entities);
 }

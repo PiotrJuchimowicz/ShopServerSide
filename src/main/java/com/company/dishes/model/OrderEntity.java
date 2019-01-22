@@ -13,13 +13,10 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = "dishOrderEntities")
 public class OrderEntity extends BaseEntity {
     private LocalDateTime orderDate;
     //TODO :  auto filled - converted from longitude and latitude from Android client
-    private String country;
-    private String city;
-    private String postalCode;
     private String address;
 
     public OrderEntity() {
@@ -29,7 +26,9 @@ public class OrderEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
-
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private RestaurantEntity restaurantEntity;
     @OneToMany(mappedBy = "orderEntity", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<DishOrderEntity> dishOrderEntities = new LinkedHashSet<>();
 }

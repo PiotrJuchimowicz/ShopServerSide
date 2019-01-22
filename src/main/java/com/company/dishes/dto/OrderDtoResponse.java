@@ -5,16 +5,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalTime;
 
 @Getter
 @Setter
 @ToString(callSuper = true)
 public class OrderDtoResponse extends BaseDto {
     private LocalDateTime orderDate;
-    private String country;
-    private String city;
-    private String postalCode;
     private String address;
-    private List<DishDto> dishes;
 }

@@ -5,6 +5,7 @@ import com.company.dishes.service.BaseService;
 import com.company.dishes.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,17 +13,27 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "/users")
 @Slf4j
-public class UserController extends BaseController<UserDto, Long> {
+public class UserController extends BaseController<UserDto> {
 
     @Autowired
-    public UserController(BaseService<UserDto, Long> service) {
+    public UserController(BaseService<UserDto> service) {
         super(service);
     }
 
+    @PostMapping("/login")
+    public boolean login(@RequestBody UserDto userDto) {
+        return getUserService().login(userDto);
+    }
+
     @PostMapping
-    public UserDto create(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<Object> create(@Valid @RequestBody UserDto userDto) {
         log.info("Creating user using json: " + userDto);
-        return this.getUserService().create(userDto);
+        try {
+            userDto = this.getUserService().create(userDto);
+            return ResponseEntity.ok(userDto);
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PatchMapping

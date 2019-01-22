@@ -12,23 +12,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.security.SecureRandom;
 
 @Service
 @Slf4j
-public class UserServiceImpl extends BaseServiceImpl<UserDto, UserEntity, Long> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<UserDto, UserEntity> implements UserService {
 
     @Autowired
     public UserServiceImpl(BaseRepository<UserEntity> repository, BaseMapper<UserDto, UserEntity> mapper) {
         super(repository, mapper);
     }
 
+    //TODO hash password
     @Override
     public UserDto create(UserDto dto) {
-        UserEntity userEntity = this.getMapper().dtoToEntity(dto);
-        log.info("Mapped user entity to dto: " + dto);
+        UserEntity userEntity = getUserRepository().findByUsername(dto.getUsername());
+        if (userEntity != null) {
+            throw new IllegalStateException("User with username: " + dto.getUsername() + "already exist");
+        }
+        userEntity = getUserMapper().dtoToEntity(dto);
         userEntity = getUserRepository().save(userEntity);
-        log.info("Saved user entity: " + userEntity);
-        return getMapper().entityToDto(userEntity);
+        return getUserMapper().entityToDto(userEntity);
     }
 
     @Override
@@ -49,6 +53,16 @@ public class UserServiceImpl extends BaseServiceImpl<UserDto, UserEntity, Long> 
         log.info("Found entity: " + userEntity);
         this.getRepository().delete(userEntity);
         log.info("Removed entity");
+    }
+
+    //TODO hash password
+    @Override
+    public boolean login(UserDto userDto) {
+        String username = userDto.getUsername();
+        String password = userDto.getPassword();
+        log.info("Finding user with username" + username + " and password " + password);
+        UserEntity userEntity = getUserRepository().findByUsernameAndPassword(username, password);
+        return userEntity != null;
     }
 
     private UserEntity findUserEntity(Long id) {

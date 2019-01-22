@@ -14,10 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/orders")
 @Slf4j
-public class OrderController extends BaseController<OrderDtoResponse, Long> {
+public class OrderController extends BaseController<OrderDtoResponse> {
 
     @Autowired
-    public OrderController(BaseService<OrderDtoResponse, Long> service) {
+    public OrderController(BaseService<OrderDtoResponse> service) {
         super(service);
     }
 
@@ -36,6 +36,5 @@ public class OrderController extends BaseController<OrderDtoResponse, Long> {
     public OrderService getOrderService() {
         return (OrderService) this.getService();
     }
-
 
 }

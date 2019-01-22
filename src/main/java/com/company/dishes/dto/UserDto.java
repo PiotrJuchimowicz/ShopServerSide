@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Getter
 @Setter
@@ -19,5 +18,4 @@ public class UserDto extends BaseDto {
     private String name;
     @NotNull
     private String surname;
-    private List<OrderDtoResponse> orders;
 }

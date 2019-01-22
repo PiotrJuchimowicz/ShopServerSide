@@ -1,6 +1,13 @@
 package com.company.dishes.service;
 
-public interface BaseService<D, T> {
+import com.company.dishes.dto.BaseDto;
 
-    D read(T id);
+import java.util.List;
+
+public interface BaseService<D extends BaseDto> {
+    List<D> readAll();
+
+    D read(Long id);
+
+    D create(D dto);
 }
