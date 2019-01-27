@@ -13,4 +13,6 @@ public interface DishRepository extends BaseRepository<DishEntity> {
             "FROM DishOrderEntity dishOrderEntity JOIN DishEntity dishEntity " +
             "WHERE dishOrderEntity.id=:orderId")
     List<DishEntity> findByOrderId(@Param("orderId") Long orderId);
+
+    List<DishEntity> findByRestaurantEntityId(Long restaurantId);
 }

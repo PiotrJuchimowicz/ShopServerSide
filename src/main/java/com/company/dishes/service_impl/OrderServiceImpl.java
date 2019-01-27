@@ -1,5 +1,6 @@
 package com.company.dishes.service_impl;
 
+import com.company.dishes.dto.DishDto;
 import com.company.dishes.dto.OrderDtoRequest;
 import com.company.dishes.dto.OrderDtoResponse;
 import com.company.dishes.mapper.BaseMapper;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,7 +35,24 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderDtoResponse, OrderEnt
 
     @Override
     public OrderDtoResponse create(OrderDtoRequest orderDtoRequest) {
-        return null;//TODO : some backend from Android client
+        OrderDtoResponse response = new OrderDtoResponse();
+        response.setAddress(orderDtoRequest.getAddress());
+        LocalDateTime date = LocalDateTime.now();
+        String orderDate;
+        orderDate = "" +  date.getMonthValue();
+        orderDate = orderDate + "/";
+        orderDate = orderDate + date.getDayOfMonth();
+        orderDate = orderDate + "/";
+        orderDate = orderDate + date.getHour();
+        orderDate = orderDate + "/";
+        orderDate = orderDate + date.getMinute();
+        response.setOrderDate(orderDate);
+        Double price = 0D;
+        for(DishDto dishDto : orderDtoRequest.getDishes()){
+            price = price + dishDto.getPrice();
+        }
+        response.setPrice(price);
+        return response;
     }
 
     private OrderRepository getOrderRepository() {

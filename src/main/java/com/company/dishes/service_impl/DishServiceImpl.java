@@ -49,6 +49,15 @@ public class DishServiceImpl extends BaseServiceImpl<DishDto, DishEntity> implem
         return getMapper().entityToDto(entity);
     }
 
+    @Override
+    public List<DishDto> readByRestaurantId(Long restaurantId) {
+        List<DishEntity> dishEntities = this.getDishRepository().findByRestaurantEntityId(restaurantId);
+        log.info("Found: " + dishEntities);
+        List<DishDto> dishDtos = this.getMapper().entitiesToDtos(dishEntities);
+        log.info("Mapped to dtos: " + dishDtos);
+        return dishDtos;
+    }
+
     private DishRepository getDishRepository() {
         return (DishRepository) this.getRepository();
     }

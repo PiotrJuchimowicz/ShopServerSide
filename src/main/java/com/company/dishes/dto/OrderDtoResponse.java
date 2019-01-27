@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @Setter
 @ToString(callSuper = true)
 public class OrderDtoResponse extends BaseDto {
-    private LocalDateTime orderDate;
+    private String orderDate;
     private String address;
+    private Double price;
 }

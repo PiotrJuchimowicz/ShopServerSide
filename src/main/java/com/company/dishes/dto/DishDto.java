@@ -15,5 +15,7 @@ public class DishDto extends BaseDto {
     private String name;
     @NotNull
     private Double price;
+    @NotNull
+    private Integer quantity;
     private Long restaurantId;
 }

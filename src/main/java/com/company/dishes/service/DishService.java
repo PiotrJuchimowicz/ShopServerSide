@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface DishService extends BaseService<DishDto> {
     List<DishDto> readByOrder(Long orderId);
+    List<DishDto> readByRestaurantId(Long restaurantId);
 }
